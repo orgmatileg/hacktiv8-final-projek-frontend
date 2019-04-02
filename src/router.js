@@ -29,11 +29,17 @@ export default new Router({
       path: "/contacts",
       name: "contact",
       component: () => import("./views/ContactUs.vue")
+    },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: () => import("./views/Dasboard.vue"),
+      children: [
+        {
+          path: "/",
+          component: () => import("./components/Dashboard/MainDashboard.vue")
+        }
+      ]
     }
-    // {
-    //   path: "/login",
-    //   name: "login",
-    //   component: () => import("./views/Login/Login.vue")
-    // }
   ]
 });

@@ -32,6 +32,9 @@
               <strong>Sign up</strong>
             </a>
             <a @click="handleShowLogin" class="button is-link">Log in</a>
+            <router-link to="/dashboard">
+              <a class="button is-link">Go to Dashboard</a>
+            </router-link>
           </div>
         </div>
       </div>
