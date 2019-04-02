@@ -30,5 +30,10 @@ export default new Router({
       name: "contact",
       component: () => import("./views/ContactUs.vue")
     }
+    // {
+    //   path: "/login",
+    //   name: "login",
+    //   component: () => import("./views/Login/Login.vue")
+    // }
   ]
 });
