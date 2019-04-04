@@ -3,10 +3,12 @@
     <p class="menu-label">Menus</p>
     <ul class="menu-list">
       <li v-bind:key="menu.id" v-for="menu in menus">
-        <a
-          @click="handleClickMenu(menu.id)"
-          v-bind:class="{'is-active':menu.isActive}"
-        >{{menu.name}}</a>
+        <router-link :to="menu.path">
+          <a
+            @click="handleClickMenu(menu.id)"
+            v-bind:class="{'is-active':menu.isActive}"
+          >{{menu.name}}</a>
+        </router-link>
       </li>
     </ul>
   </aside>
@@ -30,25 +32,25 @@ export default {
           id: 1,
           name: "Dashboard",
           isActive: true,
-          path: "/"
+          path: "/dashboard"
         },
         {
           id: 2,
           name: "Posts",
           isActive: false,
-          path: "/posts"
+          path: "/dashboard/posts"
         },
         {
           id: 3,
           name: "Contact Opt-In",
           isActive: false,
-          path: "/contacts"
+          path: "/dashboard/contacts"
         },
         {
           id: 4,
           name: "Settings",
           isActive: false,
-          path: "/settings"
+          path: "/dashboard/settings"
         }
       ]
     };

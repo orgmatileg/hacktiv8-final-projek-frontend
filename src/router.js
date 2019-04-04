@@ -36,8 +36,20 @@ export default new Router({
       component: () => import("./views/Dasboard.vue"),
       children: [
         {
-          path: "/",
+          path: "",
           component: () => import("./components/Dashboard/MainDashboard.vue")
+        },
+        {
+          path: "posts",
+          component: () => import("./components/Dashboard/posts/List.vue")
+        },
+        {
+          path: "contacts",
+          component: () => import("./components/Dashboard/posts/List.vue")
+        },
+        {
+          path: "settings",
+          component: () => import("./components/Dashboard/posts/List.vue")
         }
       ]
     }
