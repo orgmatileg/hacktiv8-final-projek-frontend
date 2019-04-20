@@ -4,6 +4,7 @@ import todos from "./modules/todos";
 import login from "./modules/login";
 import register from "./modules/register";
 import posts from "./modules/posts";
+import contactUs from "./modules/contact-us";
 
 // Load Vuex
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     todos,
     login,
     register,
-    posts
+    posts,
+    contactUs
   }
 });

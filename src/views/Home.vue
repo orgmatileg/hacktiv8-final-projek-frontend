@@ -5,12 +5,18 @@
         <div v-bind:key="post.post_id" v-for="post in posts" class="post content">
           <div class="media">
             <div class="media-left">
-              <img height="200" width="200" :src="post.post_image" alt="Placeholder image">
+              <router-link :to="'/posts/'+post.post_id">
+                <img height="200" width="200" :src="post.post_image" alt="Placeholder image">
+              </router-link>
             </div>
             <div class="media-content">
-              <h1>{{post.post_subject}}</h1>
-              <p>{{post.post_content}}</p>
-              <button class="button is-primary">Read More</button>
+              <router-link :to="'/posts/'+post.post_id">
+                <h1>{{post.post_subject}}</h1>
+              </router-link>
+              <p>{{post.post_content.substring(0,350)}}</p>
+              <router-link :to="'/posts/'+post.post_id">
+                <button class="button is-primary">Read More</button>
+              </router-link>
             </div>
           </div>
         </div>

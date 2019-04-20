@@ -26,7 +26,13 @@
     </nav>
     <div class="columns is-multiline is-centered">
       <div v-bind:key="post.post_id" v-for="post in posts" class="column is-3">
-        <Post :imgArticle="post.post_image" :createdAt="post.created_at" :title="post.subject"/>
+        <Post
+          :imgArticle="post.post_image"
+          :createdAt="post.created_at"
+          :title="post.post_subject"
+          :content="post.post_content"
+          :id="post.post_id"
+        />
       </div>
     </div>
   </div>

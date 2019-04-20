@@ -13,9 +13,9 @@ const getters = {
 };
 
 const actions = {
-  handleLogin: async ({ commit }, loginField) => {
+  handleLogin: async ({ commit }, loginForm) => {
     try {
-      const res = await axios.post("auth", loginField);
+      const res = await axios.post("auth", loginForm);
       const { token } = res.data.payload;
 
       localStorage.setItem("token", token);

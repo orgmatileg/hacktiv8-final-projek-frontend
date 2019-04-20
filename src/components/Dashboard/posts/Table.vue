@@ -89,7 +89,7 @@
 import moment from "moment";
 
 export default {
-  name: "Table",
+  name: "Table Posts",
   data() {
     return {
       onPage: 1

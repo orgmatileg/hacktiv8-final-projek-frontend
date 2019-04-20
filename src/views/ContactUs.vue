@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "ContactUs",
   data() {
@@ -104,6 +106,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["postContactUs"]),
     onChangeInput(formName) {
       if (this.form[formName].length > 0) {
         this.formError[formName] = "";
@@ -112,6 +115,14 @@ export default {
     validateEmail(email) {
       var re = /\S+@\S+\.\S+/;
       return re.test(email);
+    },
+    cleanContactUsForm() {
+      this.form = {
+        namaLengkap: "",
+        email: "",
+        judul: "",
+        pesan: ""
+      };
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -136,7 +147,14 @@ export default {
 
       if (this.isFormValid == false) return;
 
-      // Lanjut
+      this.postContactUs({
+        full_name: this.form.namaLengkap,
+        email: this.form.email,
+        subject: this.form.judul,
+        message: this.form.pesan
+      });
+
+      this.cleanContactUsForm();
     }
   }
 };
