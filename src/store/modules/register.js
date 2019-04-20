@@ -9,7 +9,7 @@ const getters = {
 const actions = {
   handleShowRegister: ({ commit }) => {
     const status = !state.isRegister;
-    console.log(status);
+
     commit("setIsRegister", status);
   }
 };

@@ -2,53 +2,14 @@
   <div class="container">
     <div class="columns">
       <div class="column is-two-thirds">
-        <div class="post content">
+        <div v-bind:key="post.post_id" v-for="post in posts" class="post content">
           <div class="media">
             <div class="media-left">
-              <img
-                height="300"
-                width="300"
-                src="https://assets2.domestika.org/project-items/001/328/782/36daysoftype4-big.jpg?1434458261"
-                alt="Placeholder image"
-              >
+              <img height="200" width="200" :src="post.post_image" alt="Placeholder image">
             </div>
             <div class="media-content">
-              <h1>Artikel 1</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis erat porta, suscipit lorem ac, viverra neque. Cras porttitor consectetur orci, dictum faucibus velit mollis sit amet. Nunc ut luctus orci. In leo dolor, varius vel lacinia tincidunt, vestibulum ut purus. Nullam eget tempus arcu.</p>
-              <button class="button is-primary">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="post content">
-          <div class="media">
-            <div class="media-left">
-              <img
-                height="300"
-                width="300"
-                src="https://pbs.twimg.com/profile_images/1083712059479650304/cApcvkl6_400x400.jpg"
-                alt="Placeholder image"
-              >
-            </div>
-            <div class="media-content">
-              <h1>Artikel 2</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis erat porta, suscipit lorem ac, viverra neque. Cras porttitor consectetur orci, dictum faucibus velit mollis sit amet. Nunc ut luctus orci. In leo dolor, varius vel lacinia tincidunt, vestibulum ut purus. Nullam eget tempus arcu.</p>
-              <button class="button is-primary">Read More</button>
-            </div>
-          </div>
-        </div>
-        <div class="post content">
-          <div class="media">
-            <div class="media-left">
-              <img
-                height="300"
-                width="300"
-                src="https://blog.fotolia.com/es/files/2016/03/Daniel-Aristizabal-36daysoftype.jpg"
-                alt="Placeholder image"
-              >
-            </div>
-            <div class="media-content">
-              <h1>Artikel 3</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis erat porta, suscipit lorem ac, viverra neque. Cras porttitor consectetur orci, dictum faucibus velit mollis sit amet. Nunc ut luctus orci. In leo dolor, varius vel lacinia tincidunt, vestibulum ut purus. Nullam eget tempus arcu.</p>
+              <h1>{{post.post_subject}}</h1>
+              <p>{{post.post_content}}</p>
               <button class="button is-primary">Read More</button>
             </div>
           </div>
@@ -77,11 +38,22 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "home",
-  components: {}
+  name: "Home",
+  components: {},
+  methods: {
+    ...mapActions(["fetchPosts"])
+  },
+  computed: mapGetters({
+    posts: "getPosts"
+  }),
+  beforeMount() {
+    this.fetchPosts();
+
+    console.log(this.posts);
+  }
 };
 </script>
 <style scoped>

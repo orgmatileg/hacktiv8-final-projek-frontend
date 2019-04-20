@@ -28,13 +28,19 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a v-if="!isLoggedin" @click="handleShowRegister" class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a @click="handleShowLogin" class="button is-link">Log in</a>
-            <router-link to="/dashboard">
+            <router-link v-if="isLoggedIn" style="margin-right: .5rem;" to="/dashboard">
               <a class="button is-link">Go to Dashboard</a>
             </router-link>
+            <a v-if="!isLoggedIn" @click="handleShowRegister" class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a v-if="!isLoggedIn" @click="handleShowLogin" class="button is-link">Log in</a>
+            <div v-else>
+              <a @click="handleLogout" class="button is-danger">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -47,9 +53,9 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Header",
   methods: {
-    ...mapActions(["handleShowLogin", "handleShowRegister"])
+    ...mapActions(["handleShowLogin", "handleShowRegister", "handleLogout"])
   },
-  computed: mapGetters(["isLoggedin"])
+  computed: mapGetters(["isLoggedIn"])
 };
 </script>
 

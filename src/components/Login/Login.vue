@@ -2,7 +2,7 @@
   <div>
     <div class="modal" v-bind:class="{'is-active': isLogin}">
       <div @click="handleShowLogin" class="modal-background"></div>
-
+      <ErrorNotification v-if="errorMessage" :handleClose="handleCleanErr" :message="errorMessage"/>
       <div class="modal-content">
         <div id="form-login">
           <div class="field">
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="field">
-            <a class="button is-primary is-fullwidth">Login</a>
+            <a @click="handleSubmit" class="button is-primary is-fullwidth">Login</a>
           </div>
         </div>
       </div>
@@ -40,8 +40,12 @@
 </template>
 
 <script>
+import ErrorNotification from "../ErrorNotification/ErrorNotification";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  components: {
+    ErrorNotification
+  },
   name: "Login",
   data() {
     return {
@@ -50,9 +54,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["handleShowLogin"])
+    handleSubmit() {
+      this.handleLogin({ username: this.username, password: this.password });
+
+      this.username = "";
+      this.password = "";
+    },
+
+    ...mapActions(["handleShowLogin", "handleLogin", "handleCleanErr"])
   },
-  computed: mapGetters(["isLogin"])
+  computed: mapGetters(["isLogin", "errorMessage"])
 };
 </script>
 
