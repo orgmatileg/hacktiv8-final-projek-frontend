@@ -13,7 +13,7 @@
               <router-link :to="'/posts/'+post.post_id">
                 <h1>{{post.post_subject}}</h1>
               </router-link>
-              <p>{{post.post_content.substring(0,350)}}</p>
+              <p>{{post.post_content}}</p>
               <router-link :to="'/posts/'+post.post_id">
                 <button class="button is-primary">Read More</button>
               </router-link>
@@ -48,7 +48,6 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
-  components: {},
   methods: {
     ...mapActions(["fetchPosts"])
   },
@@ -57,8 +56,6 @@ export default {
   }),
   beforeMount() {
     this.fetchPosts();
-
-    console.log(this.posts);
   }
 };
 </script>

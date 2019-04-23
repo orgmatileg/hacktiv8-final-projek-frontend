@@ -3,7 +3,13 @@
     <div class="content">
       <h2 class="is-marginless">Posts</h2>
     </div>
-    <Table :headers="dataTestHeader" :list="posts" limit="10" count="200"/>
+    <Table
+      :headers="dataTestHeader"
+      :list="posts"
+      limit="10"
+      count="200"
+      :handleDelete="handleDeletePost"
+    />
   </div>
 </template>
 
@@ -13,6 +19,7 @@ import Table from "./Table";
 
 // LIBRARY
 import { mapActions, mapGetters } from "vuex";
+import { setTimeout } from "timers";
 
 export default {
   name: "List",
@@ -25,14 +32,20 @@ export default {
     Table
   },
   methods: {
-    ...mapActions(["fetchPosts"])
+    ...mapActions(["fetchPostsAdmin", "deletePost"]),
+    handleDeletePost(id) {
+      this.deletePost(id);
+      setTimeout(() => {
+        this.fetchPostsAdmin();
+      }, 500);
+    }
   },
   computed: mapGetters({
-    posts: "getPosts",
-    postsCount: "getPostsCount"
+    posts: "getPostsAdmin",
+    postsCount: "getPostsAdminCount"
   }),
-  beforeMount() {
-    this.fetchPosts();
+  created() {
+    this.fetchPostsAdmin();
   }
 };
 </script>

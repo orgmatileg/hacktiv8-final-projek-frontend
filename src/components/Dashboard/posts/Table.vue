@@ -14,15 +14,17 @@
           <td>{{formatDate(data.created_at)}}</td>
           <td>
             <div class="field has-addons">
-              <p class="control">
-                <a class="button is-info">
-                  <span class="icon is-small">
-                    <i class="fas fa-edit"></i>
-                  </span>
-                  <span>Edit</span>
-                </a>
-              </p>
-              <p class="control">
+              <router-link :to="`posts/${data.post_id}/edit`">
+                <p class="control">
+                  <a class="button is-info">
+                    <span class="icon is-small">
+                      <i class="fas fa-edit"></i>
+                    </span>
+                    <span>Edit</span>
+                  </a>
+                </p>
+              </router-link>
+              <p @click="handleDelete(data.post_id)" class="control">
                 <a class="button is-danger">
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
@@ -151,10 +153,11 @@ export default {
   props: {
     headers: { type: Array, required: true },
     list: { type: Array, required: true },
-    count: { type: Number, required: true },
-    limit: { type: Number, required: true },
-    offset: { type: Number, required: true },
-    onPagination: { type: Number, default: 1 }
+    count: { type: String, required: true },
+    // limit: { type: Number, required: true },
+    // offset: { type: Number, required: true },
+    onPagination: { type: Number, default: 1 },
+    handleDelete: { type: Function }
   }
 };
 </script>

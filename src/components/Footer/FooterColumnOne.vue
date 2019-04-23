@@ -6,10 +6,10 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <input class="input is-primary" type="email" placeholder="Your email">
+          <input v-model="email" class="input is-primary" type="email" placeholder="Your email">
         </div>
         <div class="control">
-          <button class="button is-link">Subscribe!</button>
+          <button @click="handleSubmit" class="button is-link">Subscribe!</button>
         </div>
       </div>
     </form>
@@ -31,8 +31,23 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: "FooterColumnOne"
+  name: "FooterColumnOne",
+  data() {
+    return {
+      email: ""
+    };
+  },
+  methods: {
+    ...mapActions(["postSubscribe"]),
+    handleSubmit() {
+      this.postSubscribe(this.email);
+
+      this.email = "";
+    }
+  }
 };
 </script>
 
