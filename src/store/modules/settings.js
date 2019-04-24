@@ -31,11 +31,9 @@ const getters = {
 };
 
 const actions = {
-  fetchPosts: async ({ commit }, params) => {
+  fetchPosts: async ({ commit }) => {
     try {
-      const res = await axios.get("posts", {
-        params: params
-      });
+      const res = await axios.get("posts");
       const { payload, count } = res.data;
 
       commit("setPostsCount", count);
@@ -94,8 +92,6 @@ const mutations = {
   setPost: (state, post) => (state.post = post),
   setPosts: (state, posts) => (state.posts = posts),
   setPostsCount: (state, count) => (state.postCount = count),
-  setPostsAdmin: (state, posts) => (state.postsAdmin = posts),
-  setPostsCountAdmin: (state, count) => (state.postCountAdmin = count),
   updatePost: (state, post) => (state.post = post)
 };
 

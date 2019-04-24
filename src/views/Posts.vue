@@ -54,7 +54,7 @@ export default {
     postsCount: "getPostsCount"
   }),
   beforeMount() {
-    this.fetchPosts();
+    this.fetchPosts({ limit: 1000 });
   }
 };
 </script>

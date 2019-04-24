@@ -13,7 +13,6 @@ import Table from "./Table";
 
 // LIBRARY
 import { mapActions, mapGetters } from "vuex";
-import { setTimeout } from "timers";
 
 export default {
   name: "List",

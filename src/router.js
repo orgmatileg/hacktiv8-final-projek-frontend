@@ -69,7 +69,7 @@ export default new Router({
         },
         {
           path: "settings",
-          component: () => import("./components/Dashboard/posts/List.vue")
+          component: () => import("./components/Dashboard/settings/List.vue")
         }
       ]
     }

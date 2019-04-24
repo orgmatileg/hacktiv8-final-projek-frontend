@@ -9,24 +9,22 @@
       <tbody>
         <tr v-bind:key="index" v-for="(data,index) in list">
           <th>{{onPage == 1 ? index+1: offset+index+1}}</th>
-          <td>{{data.full_name}}</td>
-          <td>{{data.email}}</td>
-          <td>{{data.subject}}</td>
-
+          <td>{{data.post_subject}}</td>
+          <td>{{data.author.author_fullname}}</td>
           <td>{{formatDate(data.created_at)}}</td>
           <td>
             <div class="field has-addons">
-              <router-link :to="`contacts/${data.contact_us_id}/detail`">
+              <router-link :to="`posts/${data.post_id}/edit`">
                 <p class="control">
                   <a class="button is-info">
                     <span class="icon is-small">
-                      <i class="fas fa-info-circle"></i>
+                      <i class="fas fa-edit"></i>
                     </span>
-                    <span>Detail</span>
+                    <span>Edit</span>
                   </a>
                 </p>
               </router-link>
-              <p @click="handleDelete(data.contact_us_id)" class="control">
+              <p @click="handleDelete(data.post_id)" class="control">
                 <a class="button is-danger">
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
@@ -60,7 +58,7 @@
               aria-label="Goto page 1"
             >1</a>
           </li>
-          <template v-if="lastPagination > 3">
+          <template v-if="lastPagination > 2">
             <li>
               <span v-if="middlePagination.length > 0" class="pagination-ellipsis">&hellip;</span>
             </li>
@@ -102,7 +100,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchContacts"]),
+    ...mapActions(["fetchPostsAdmin"]),
     formatDate(dateProps) {
       return moment(dateProps).format("dddd, DD/MM/YYYY hh:mm");
     },
@@ -118,12 +116,12 @@ export default {
           break;
       }
 
-      this.fetchContacts(this.offset);
+      this.fetchPostsAdmin(this.offset);
     },
     handleClickPagination(pageNumber) {
       this.offset = pageNumber * this.limit - this.limit;
 
-      this.fetchContacts(this.offset);
+      this.fetchPostsAdmin(this.offset);
       return (this.onPage = pageNumber);
     }
   },

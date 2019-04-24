@@ -36,10 +36,12 @@
             </a>
             <a v-if="!isLoggedIn" @click="handleShowLogin" class="button is-link">Log in</a>
             <div v-else>
-              <a @click="handleLogout" class="button is-danger">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-              </a>
+              <router-link to="/">
+                <a @click="handleLogout" class="button is-danger">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Logout
+                </a>
+              </router-link>
             </div>
           </div>
         </div>

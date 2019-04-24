@@ -20,6 +20,19 @@
             </div>
           </div>
         </div>
+        <nav class="pagination is-right" role="navigation" aria-label="pagination">
+          <a
+            :disabled="onPage < 2"
+            @click="onPage !== 1 && handlePreviousAndNext('back')"
+            class="pagination-previous"
+          >Previous</a>
+          <a
+            :disabled="onPage == lastPagination - 1 "
+            @click="onPage != lastPagination -1  && handlePreviousAndNext('next')"
+            class="pagination-next"
+          >Next page</a>
+          <ul class="pagination-list"></ul>
+        </nav>
       </div>
       <div class="column">
         <nav class="panel">
@@ -48,14 +61,49 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
-  methods: {
-    ...mapActions(["fetchPosts"])
+  data() {
+    return {
+      onPage: 1,
+      offset: 0,
+      limit: 2
+    };
   },
-  computed: mapGetters({
-    posts: "getPosts"
-  }),
+  methods: {
+    ...mapActions(["fetchPosts"]),
+    handlePreviousAndNext(action) {
+      switch (action) {
+        case "back":
+          this.onPage--;
+          this.offset -= this.limit;
+          break;
+        case "next":
+          this.onPage++;
+          this.offset += this.limit;
+          break;
+      }
+
+      this.fetchPosts({ limit: 2, offset: this.offset });
+    }
+  },
+  computed: {
+    lastPagination() {
+      let totalData = this.postCount;
+      if (this.postCount < this.limit * 2) return 2;
+
+      let totalPagination = totalData / this.limit;
+      console.log(totalPagination);
+      return Math.ceil(totalPagination);
+    },
+    ...mapGetters({
+      posts: "getPosts",
+      postCount: "getPostsCount"
+    })
+  },
   beforeMount() {
-    this.fetchPosts();
+    this.fetchPosts({
+      limit: 2,
+      offset: 0
+    });
   }
 };
 </script>
