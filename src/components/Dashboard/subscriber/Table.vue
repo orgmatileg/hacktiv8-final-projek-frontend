@@ -9,31 +9,8 @@
       <tbody>
         <tr v-bind:key="index" v-for="(data,index) in list">
           <th>{{onPage == 1 ? index+1: offset+index+1}}</th>
-          <td>{{data.post_subject}}</td>
-          <td>{{data.author.author_fullname}}</td>
+          <td>{{data.email}}</td>
           <td>{{formatDate(data.created_at)}}</td>
-          <td>
-            <div class="field has-addons">
-              <router-link :to="`posts/${data.post_id}/edit`">
-                <p class="control">
-                  <a class="button is-info">
-                    <span class="icon is-small">
-                      <i class="fas fa-edit"></i>
-                    </span>
-                    <span>Edit</span>
-                  </a>
-                </p>
-              </router-link>
-              <p @click="handleDelete(data.post_id)" class="control">
-                <a class="button is-danger">
-                  <span class="icon is-small">
-                    <i class="fas fa-trash-alt"></i>
-                  </span>
-                  <span>Delete</span>
-                </a>
-              </p>
-            </div>
-          </td>
         </tr>
       </tbody>
     </table>
@@ -100,7 +77,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchPostsAdmin"]),
+    ...mapActions(["fetchSubscribes"]),
     formatDate(dateProps) {
       return moment(dateProps).format("dddd, DD/MM/YYYY hh:mm");
     },
@@ -116,12 +93,12 @@ export default {
           break;
       }
 
-      this.fetchPostsAdmin(this.offset);
+      this.fetchSubscribes(this.offset);
     },
     handleClickPagination(pageNumber) {
       this.offset = pageNumber * this.limit - this.limit;
 
-      this.fetchPostsAdmin(this.offset);
+      this.fetchSubscribes(this.offset);
       return (this.onPage = pageNumber);
     }
   },

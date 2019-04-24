@@ -42,12 +42,18 @@ export default {
         },
         {
           id: 3,
-          name: "Contact Opt-In",
+          name: "Contact Form",
           isActive: false,
           path: "/dashboard/contacts"
         },
         {
           id: 4,
+          name: "Email Subcriber",
+          isActive: false,
+          path: "/dashboard/subscriber"
+        },
+        {
+          id: 5,
           name: "Settings",
           isActive: false,
           path: "/dashboard/settings"

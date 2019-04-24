@@ -25,9 +25,9 @@ const state = {
 const getters = {
   getPost: state => state.post,
   getPosts: state => state.posts,
-  getPostsCount: state => state.postCount,
+  getPostsCount: state => Number(state.postCount),
   getPostsAdmin: state => state.postsAdmin,
-  getPostsAdminCount: state => state.postsAdminCount
+  getPostsAdminCount: state => state.postCountAdmin
 };
 
 const actions = {
@@ -42,13 +42,20 @@ const actions = {
       throw err;
     }
   },
-  fetchPostsAdmin: async ({ commit }) => {
+  fetchPostsAdmin: async ({ commit }, offset) => {
     try {
-      const res = await axios.get("posts?isPublish=0 or 1");
+      const res = await axios.get("posts", {
+        params: {
+          isPublish: "0 or 1",
+          offset
+        }
+      });
       const { payload, count } = res.data;
 
-      commit("setPostsCountAdmin", count);
-      commit("setPostsAdmin", payload);
+      if (payload) {
+        commit("setPostsCountAdmin", count);
+        commit("setPostsAdmin", payload);
+      }
     } catch (err) {
       throw err;
     }

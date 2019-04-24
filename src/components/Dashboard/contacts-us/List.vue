@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="content">
-      <h2 class="is-marginless">Posts</h2>
+      <h2 class="is-marginless">Contact Form</h2>
     </div>
     <Table
       :headers="dataHeader"
-      :list="posts"
+      :list="contacts"
       :limit="limit"
-      :count="postsCount"
+      :count="contactsCount"
       :handleDelete="handleDeletePost"
     />
   </div>
@@ -25,7 +25,7 @@ export default {
   name: "List",
   data() {
     return {
-      dataHeader: ["No", "Title", "Author", "Date", "Action"],
+      dataHeader: ["No", "Full Name", "Email", "Title", "Date", "Action"],
       limit: 10
     };
   },
@@ -33,7 +33,7 @@ export default {
     Table
   },
   methods: {
-    ...mapActions(["fetchPostsAdmin", "deletePost"]),
+    ...mapActions(["fetchContacts", "deletePost"]),
     handleDeletePost(id) {
       this.deletePost(id);
       setTimeout(() => {
@@ -42,11 +42,11 @@ export default {
     }
   },
   computed: mapGetters({
-    posts: "getPostsAdmin",
-    postsCount: "getPostsAdminCount"
+    contacts: "getContacts",
+    contactsCount: "getContactCount"
   }),
   created() {
-    this.fetchPostsAdmin();
+    this.fetchContacts();
   }
 };
 </script>

@@ -55,7 +55,17 @@ export default new Router({
         },
         {
           path: "contacts",
-          component: () => import("./components/Dashboard/posts/List.vue")
+          component: () => import("./components/Dashboard/contacts-us/List.vue")
+        },
+        {
+          path: "contacts/:id/detail",
+          name: "Contact Detail",
+          component: () =>
+            import("./components/Dashboard/contacts-us/Detail.vue")
+        },
+        {
+          path: "subscriber",
+          component: () => import("./components/Dashboard/subscriber/List.vue")
         },
         {
           path: "settings",

@@ -8,21 +8,25 @@
       </thead>
       <tbody>
         <tr v-bind:key="index" v-for="(data,index) in list">
-          <th>{{onPage == 1 ? index+1*onPage: index+1*onPage*limit}}</th>
-          <td>{{data.post_subject}}</td>
-          <td>{{data.author.author_fullname}}</td>
+          <th>{{onPage == 1 ? index+1: offset+index+1}}</th>
+          <td>{{data.full_name}}</td>
+          <td>{{data.email}}</td>
+          <td>{{data.subject}}</td>
+
           <td>{{formatDate(data.created_at)}}</td>
           <td>
             <div class="field has-addons">
-              <p class="control">
-                <a class="button is-info">
-                  <span class="icon is-small">
-                    <i class="fas fa-edit"></i>
-                  </span>
-                  <span>Edit</span>
-                </a>
-              </p>
-              <p class="control">
+              <router-link :to="`contacts/${data.contact_us_id}/detail`">
+                <p class="control">
+                  <a class="button is-info">
+                    <span class="icon is-small">
+                      <i class="fas fa-info-circle"></i>
+                    </span>
+                    <span>Detail</span>
+                  </a>
+                </p>
+              </router-link>
+              <p @click="handleDelete(data.contact_us_id)" class="control">
                 <a class="button is-danger">
                   <span class="icon is-small">
                     <i class="fas fa-trash-alt"></i>
@@ -44,7 +48,7 @@
         >Previous</a>
         <a
           @click="onPage !== lastPagination && handlePreviousAndNext('next')"
-          :disabled="onPage == lastPagination"
+          :disabled="onPage == lastPagination || this.list.length < this.limit"
           class="pagination-next"
         >Next page</a>
         <ul class="pagination-list">
@@ -56,7 +60,7 @@
               aria-label="Goto page 1"
             >1</a>
           </li>
-          <template v-if="count > limit">
+          <template v-if="lastPagination > 3">
             <li>
               <span v-if="middlePagination.length > 0" class="pagination-ellipsis">&hellip;</span>
             </li>
@@ -70,14 +74,14 @@
             <li>
               <span class="pagination-ellipsis">&hellip;</span>
             </li>
-            <li>
-              <a
-                @click="handleClickPagination(lastPagination)"
-                v-bind:class="{'is-current':(onPage == lastPagination)}"
-                class="pagination-link"
-              >{{lastPagination}}</a>
-            </li>
           </template>
+          <li v-if="count > 10">
+            <a
+              @click="handleClickPagination(lastPagination)"
+              v-bind:class="{'is-current':(onPage == lastPagination)}"
+              class="pagination-link"
+            >{{lastPagination}}</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -87,43 +91,61 @@
 <script>
 // LIBRARY
 import moment from "moment";
+import { mapActions } from "vuex";
 
 export default {
-  name: "Table",
+  name: "Table Posts",
   data() {
     return {
-      onPage: 1
+      onPage: 1,
+      offset: 0
     };
   },
   methods: {
+    ...mapActions(["fetchContacts"]),
     formatDate(dateProps) {
       return moment(dateProps).format("dddd, DD/MM/YYYY hh:mm");
     },
     handlePreviousAndNext(action) {
       switch (action) {
         case "back":
-          return this.onPage--;
+          this.offset -= this.limit;
+          this.onPage--;
+          break;
         case "next":
-          return this.onPage++;
+          this.offset += this.limit;
+          this.onPage++;
+          break;
       }
+
+      this.fetchContacts(this.offset);
     },
     handleClickPagination(pageNumber) {
+      this.offset = pageNumber * this.limit - this.limit;
+
+      console.log(this.offset);
+
+      this.fetchContacts(this.offset);
       return (this.onPage = pageNumber);
     }
   },
   computed: {
-    lastPagination: function() {
+    lastPagination() {
       let totalData = this.count;
+
+      if (this.count < 20) return 2;
+
       let totalPagination = totalData / this.limit;
-      return totalPagination;
+      return Math.ceil(totalPagination);
     },
-    middlePagination: function() {
+    middlePagination() {
       const left = this.onPage - 1;
       const middle = this.onPage;
       const right = this.onPage + 1;
 
-      // check if only one page
-      // if
+      if (this.lastPagination <= 3) {
+        return [2];
+      }
 
       // for first pagination
       if (this.onPage == 1) {
@@ -153,8 +175,7 @@ export default {
     list: { type: Array, required: true },
     count: { type: Number, required: true },
     limit: { type: Number, required: true },
-    offset: { type: Number, required: true },
-    onPagination: { type: Number, default: 1 }
+    handleDelete: { type: Function }
   }
 };
 </script>
