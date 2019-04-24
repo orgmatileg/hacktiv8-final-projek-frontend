@@ -31,9 +31,9 @@
             <router-link v-if="isLoggedIn" style="margin-right: .5rem;" to="/dashboard">
               <a class="button is-link">Go to Dashboard</a>
             </router-link>
-            <a v-if="!isLoggedIn" @click="handleShowRegister" class="button is-primary">
+            <!-- <a v-if="!isLoggedIn" @click="handleShowRegister" class="button is-primary">
               <strong>Sign up</strong>
-            </a>
+            </a>-->
             <a v-if="!isLoggedIn" @click="handleShowLogin" class="button is-link">Log in</a>
             <div v-else>
               <router-link to="/">
