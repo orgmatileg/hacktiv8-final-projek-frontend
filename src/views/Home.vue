@@ -13,7 +13,7 @@
               <router-link :to="'/posts/'+post.post_id">
                 <h1>{{post.post_subject}}</h1>
               </router-link>
-              <p>{{post.post_content}}</p>
+              <p>{{post.post_content.substring(0, 350)}}</p>
               <router-link :to="'/posts/'+post.post_id">
                 <button class="button is-primary">Read More</button>
               </router-link>
@@ -27,8 +27,8 @@
             class="pagination-previous"
           >Previous</a>
           <a
-            :disabled="onPage == lastPagination - 1 "
-            @click="onPage != lastPagination -1  && handlePreviousAndNext('next')"
+            :disabled="onPage == lastPagination  "
+            @click="onPage != lastPagination   && handlePreviousAndNext('next')"
             class="pagination-next"
           >Next page</a>
           <ul class="pagination-list"></ul>
@@ -91,7 +91,7 @@ export default {
       if (this.postCount < this.limit * 2) return 2;
 
       let totalPagination = totalData / this.limit;
-      console.log(totalPagination);
+
       return Math.ceil(totalPagination);
     },
     ...mapGetters({

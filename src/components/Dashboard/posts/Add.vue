@@ -34,7 +34,7 @@
                   name="post_subject"
                   class="input"
                   type="text"
-                  placeholder="Masukkan nama lengkap Anda"
+                  placeholder="Your title"
                 >
               </div>
             </div>
@@ -43,7 +43,7 @@
               <label class="label">Status</label>
               <div class="control">
                 <div class="select">
-                  <select name="is_publish" v-model="post.is_publish" @input="handleChangePost">
+                  <select v-model="post.is_publish" @input="handleChangePost">
                     <option :value="1">Publish</option>
                     <option :value="0">Unpublish</option>
                   </select>
@@ -55,7 +55,6 @@
               <label class="label">Content</label>
               <div class="control">
                 <textarea
-                  name="post_content"
                   v-model="post.post_content"
                   @input="handleChangePost"
                   class="textarea"
@@ -82,13 +81,12 @@ import Notification from "../../Notification/Notification";
 import { setTimeout } from "timers";
 
 export default {
-  name: "Edit Post",
+  name: "Add Post",
   components: { Notification },
   methods: {
-    ...mapActions(["fetchPostByID", "putPost"]),
+    ...mapActions(["addPost"]),
     handleChangePost(e) {
       let newPost = this.post;
-
       newPost[e.target.name] = e.target.value;
 
       this.$store.commit("updatePost", newPost);
@@ -97,9 +95,10 @@ export default {
       e.preventDefault();
       let newPost = this.post;
       newPost["post_image"] = "";
+      newPost["author"]["author_id"] = "3";
+      newPost["tags"] = ["No Tags"];
 
-      this.putPost({
-        id: this.$router.history.current.params.id,
+      this.addPost({
         post: newPost
       });
 
@@ -110,11 +109,7 @@ export default {
   },
   computed: mapGetters({
     post: "getPost"
-  }),
-  beforeMount() {
-    const { id } = this.$router.history.current.params;
-    this.fetchPostByID(id);
-  }
+  })
 };
 </script>
 

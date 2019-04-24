@@ -2,7 +2,18 @@
   <div>
     <div class="content">
       <h2 class="is-marginless">Posts</h2>
+      <router-link to="posts/add">
+        <p class="field">
+          <a class="button is-success is-pulled-right">
+            <span class="icon is-small">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span>Add Post</span>
+          </a>
+        </p>
+      </router-link>
     </div>
+
     <Table
       :headers="dataHeader"
       :list="posts"

@@ -54,6 +54,11 @@ export default new Router({
           component: () => import("./components/Dashboard/posts/Edit.vue")
         },
         {
+          path: "posts/add",
+          name: "Add Post",
+          component: () => import("./components/Dashboard/posts/Add.vue")
+        },
+        {
           path: "contacts",
           component: () => import("./components/Dashboard/contacts-us/List.vue")
         },

@@ -1,22 +1,24 @@
 import axios from "../../config/api";
 
+const defaultPost = {
+  post_id: "",
+  post_image: "",
+  post_subject: "",
+  post_content: "",
+  author: {
+    author_id: "",
+    author_fullname: "",
+    author_photo_profile: ""
+  },
+  tags: [],
+  is_publish: 0,
+  created_at: new Date(),
+  updated_at: new Date()
+};
+
 const state = {
   posts: [],
-  post: {
-    post_id: "",
-    post_image: "",
-    post_subject: "",
-    post_content: "",
-    author: {
-      author_id: "",
-      author_fullname: "",
-      author_photo_profile: ""
-    },
-    tags: [],
-    is_publish: 0,
-    created_at: new Date(),
-    updated_at: new Date()
-  },
+  post: defaultPost,
   postCount: 0,
   postsAdmin: [],
   postCountAdmin: 0
@@ -76,6 +78,16 @@ const actions = {
     try {
       const res = await axios.put(`posts/${id}`, post);
       // const { payload } = res.data;
+      commit("setPost", defaultPost);
+    } catch (err) {
+      throw err;
+    }
+  },
+  addPost: async ({ commit }, { post }) => {
+    try {
+      const res = await axios.post(`posts`, post);
+      // const { payload } = res.data;
+      commit("setPost", defaultPost);
     } catch (err) {
       throw err;
     }
